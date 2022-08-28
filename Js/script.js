@@ -23,7 +23,7 @@ function StayOnline(){
 function tratarErroOnline(resposta){
     clearInterval(CancelaTempo);
     clearInterval(MensagensCarrega);
-}
+}// acho que da para excluir
 
 function ListaMensagens(){
     const mensagens = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
@@ -34,6 +34,7 @@ function ListaMensagens(){
 
 function processaSucessoResposta(resposta){
     let ul = document.querySelector(".mensagens");
+    ul.innerHTML = "";
     for (let i =0; i < resposta.data.length; i++){
         if (resposta.data[i].type === "status"){
             ul.innerHTML += 
