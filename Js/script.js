@@ -1,19 +1,12 @@
 let nome = prompt("Qual é o seu nome?");
-let CancelaTempo;
-let MensagensCarrega;
-let Mensagem;
+let CancelaTempo, MensagensCarrega, Mensagem;
 EntrarNaSala();
 function EntrarNaSala(){
     let objnome = {name: nome};
     const envioNome = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", objnome);
-    envioNome.then(tratarSucessoNome);
     envioNome.catch(tratarErroNome);
     CancelaTempo = setInterval(StayOnline, 5000);
     MensagensCarrega = setInterval(ListaMensagens, 3000);
-}
-
-function tratarSucessoNome(resposta){
-    console.log(resposta);
 }
 
 function tratarErroNome(resposta){
@@ -24,16 +17,10 @@ function tratarErroNome(resposta){
 function StayOnline(){
     let objnomeonline = {name: nome};
     const envioOnline = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", objnomeonline);
-    envioOnline.then(tratarSucessoOnline);
     envioOnline.catch(tratarErroOnline);
 }
 
-function tratarSucessoOnline(resposta){
-    console.log(resposta);
-}
-
 function tratarErroOnline(resposta){
-    console.log(resposta);
     clearInterval(CancelaTempo);
     clearInterval(MensagensCarrega);
 }
@@ -78,15 +65,12 @@ function processaSucessoResposta(resposta){
 }
 
 function processaErroResposta(resposta){
-    console.log(resposta);
-    console.log("Deu erro");
     window.location.reload();
 }
 
 function FazerMensagem(){
     let input = document.querySelector(".inputMensagem");
     Mensagem = input.value;
-    console.log(Mensagem);
     EnviarMensagem();
     input.value = "";
     
@@ -95,17 +79,10 @@ function FazerMensagem(){
 function EnviarMensagem(){
     let ObjMensagem = {from: nome, to: "Todos", text: Mensagem, type: "message"}
     const requisicaoMensagem = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", ObjMensagem);
-    requisicaoMensagem.then(ProcessaSucessoEnvioMensagem);
     requisicaoMensagem.catch(ProcessaErroEnvioMensagem);
 }
 
-function ProcessaSucessoEnvioMensagem(resposta){
-    console.log(resposta);
-    console.log("Deu certo");
-}
 
 function ProcessaErroEnvioMensagem(resposta){
-    console.log(resposta);
-    console.log("Deu erro");
     window.location.reload();
 }
